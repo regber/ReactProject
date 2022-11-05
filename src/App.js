@@ -18,8 +18,10 @@ function App(){
 
     
      const CreatePost=(newPost)=>{
-        console.log(newPost);
         SetPosts([...posts,newPost]);
+     }
+     const DeletePost=(id)=>{
+        SetPosts(posts.filter(post=>post.Id!==id))
      }
 
 
@@ -27,7 +29,7 @@ function App(){
 
         <div className="App">
             <PostForm createPost={CreatePost}/>
-            <PostList posts={posts} title='List'></PostList>
+            <PostList deletePost={DeletePost} posts={posts} title='List'></PostList>
         </div>
 
         )
