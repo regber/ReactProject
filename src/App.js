@@ -7,6 +7,7 @@ import PostItem from "./components/PostItem";
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
+import MyModal from "./components/UI/MyModal/MyModal";
 import MySelect from "./components/UI/select/MySelect";
 import './style/App.css';
 
@@ -19,6 +20,8 @@ function App(){
 
 
         const [filter,setFilter]=useState({filter:'',sort:''});
+
+        const [visible, setVisible]=useState(false);
         
 
     const getSortedPosts=()=>{
@@ -46,6 +49,7 @@ function App(){
 
      const CreatePost=(newPost)=>{
         SetPosts([...posts,newPost]);
+        setVisible(false);
      }
      const DeletePost=(id)=>{
         SetPosts(posts.filter(post=>post.Id!==id))
@@ -55,7 +59,11 @@ function App(){
     return(
 
         <div className="App">
-            <PostForm createPost={CreatePost}/>
+            <MyModal visible={visible} setVisible={setVisible} >
+                <PostForm createPost={CreatePost}/>
+            </MyModal>
+            <MyButton onClick={()=>setVisible(true)}>CreatePost</MyButton>
+            
             <hr style={{margin:'15px 0px'}}/>
             <PostFilter filter={filter} setFilter={setFilter} />
             <PostList deletePost={DeletePost} posts={sortedAndFilterPosts} title='List'></PostList>
