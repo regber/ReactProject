@@ -9,6 +9,7 @@ import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
 import MyModal from "./components/UI/MyModal/MyModal";
 import MySelect from "./components/UI/select/MySelect";
+import { usePosts } from "./hooks/usePosts";
 import './style/App.css';
 
 function App(){
@@ -23,28 +24,10 @@ function App(){
 
         const [visible, setVisible]=useState(false);
         
+        const sortedAndFilterPosts=usePosts(posts,filter.sort,filter.filter);
 
-    const getSortedPosts=()=>{
 
-        if(filter.sort)
-        {
-            return [...posts].sort((a,b)=>a[filter.sort].localeCompare(b[filter.sort]));
-        }
 
-        return posts;
-    }
-
-    const getFilterPosts=()=>{
-        if(filter.filter)
-        {
-            return [...sortedPosts].filter(post=>post.title.toLowerCase().includes(filter.filter.toLowerCase()));
-        }
-
-        return sortedPosts;
-    }
-
-    const sortedPosts= useMemo(() => getSortedPosts(), [filter.sort,posts]);
-    const sortedAndFilterPosts= useMemo(() => getFilterPosts(), [filter.filter,sortedPosts]);
      
 
      const CreatePost=(newPost)=>{
